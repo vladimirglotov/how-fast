@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <title>SiteSpeed</title>
+   <!--ссылаемся на шрифты, используемые в документе-->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+   <link rel="stylesheet" href="styles.css">
+   <!--здесь мы ссылаемся на стили, которые будем использовать в документе, а именно стиль иконок-->
+</head>
+<body>
+    <div class="menu">
+      <div class="menu__title">HowFast - Performance Check Up.</div>
+      <div class="menu__subtitle">Notification types:</div>
+      <div>
+        <input type="checkbox" id="console">
+        <label for="console">Console</label>
+      </div>
+      <div>
+        <input type="checkbox" id="system">
+        <label for="system">System</label>
+      </div>
+      <div class="output"></div>
+    </div>
+    <script src="background-script.js"></script>
+</body>
+</html>

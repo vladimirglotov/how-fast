@@ -1,0 +1,24 @@
+{
+   "manifest_version": 3,
+   "name": "HowFast",
+   "version": "1.0",
+   "description": "Website loading speed measurement tool",
+   "icons": {
+        "16": "icon-1.png",
+        "32": "icon-1.png",
+        "48": "icon-1.png",
+        "128": "icon-1.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["page-script.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "background.service_worker": "background-script.js",
+    "action": {
+            "default_popup": "index.html"
+    },
+    "permissions": ["scripting", "activeTab", "notifications", "storage"]
+}
