@@ -4,10 +4,10 @@
    "version": "1.0",
    "description": "Website loading speed measurement tool",
    "icons": {
-        "16": "icon-1.png",
-        "32": "icon-1.png",
-        "48": "icon-1.png",
-        "128": "icon-1.png"
+        "16": "128.png",
+        "32": "128.png",
+        "48": "128.png",
+        "128": "128.png"
     },
     "content_scripts": [
         {
