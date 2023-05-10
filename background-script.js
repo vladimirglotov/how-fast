@@ -24,20 +24,20 @@ async function initCheckboxes() {
 
 async function getInitialSettings() {  
     const storage = await chrome.storage.sync.get(['how-fast-settings']);
-	const existedSettings = storage['how-fast-settings']
+	const existedSettings = storage['how-fast-settings'] || {}
 
 	if (Object.keys(existedSettings).length) {
 		for (const key in existedSettings) {
-			checkboxes[key].checked = existedSettings[key]
+			existedSettings[key] && checkboxes[key].click()
 		}
 	} else {
-		checkboxes[NOTIFICATION_TYPES.console].checked = true
+		checkboxes[NOTIFICATION_TYPES.console].click()
 	}
 }
 
 async function changeSettings(type, value) {
     const storage = await chrome.storage.sync.get(['how-fast-settings']);
-	const existedSettings = storage['how-fast-settings']
+	const existedSettings = storage['how-fast-settings'] || {}
 
 	chrome.storage.sync.set({'how-fast-settings': {
 		...existedSettings,

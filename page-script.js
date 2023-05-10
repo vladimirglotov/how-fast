@@ -1,4 +1,4 @@
-const NOTIFY_TYPES = {
+const NOTIFY_HANDLERS = {
     console: showNotificationInConsole,
     system: showSystemNotification
     // page: showPageNotification, you can add your way to show metrics
@@ -22,13 +22,13 @@ window.addEventListener("load", async () => {
 
     const performance = checkPerformance()
 
-    showPerformanceMetrics()
+    showPerformanceMetrics(performance)
 })
 
-function showPerformanceMetrics() {
+function showPerformanceMetrics(performance) {
     Object.keys(NOTIFY_SWITCHER).forEach(key => {
         if (NOTIFY_SWITCHER[key]) {
-            NOTIFY_TYPES[key](performance)
+            NOTIFY_HANDLERS[key](performance)
         }
     })
 }
@@ -41,6 +41,7 @@ async function getSettings() {
     for (const key in existedSettings) {
         NOTIFY_SWITCHER[key] = existedSettings[key]
     }
+    // maybe better way is Object.assign(NOTIFY_SWITCHER, existedSettings)
 }
 
 function checkPerformance() {
@@ -78,7 +79,7 @@ function addPerformanceObserver() {
             }
         }
     });
-    observer && observer.observe({type: 'layout-shift', buffered: true});
+    observer?.observe({type: 'layout-shift', buffered: true});
 }
 
 function getDataSize() {
@@ -115,7 +116,13 @@ async function showSystemNotification(performanceData) {
     const hasNotification = window.Notification
     hasNotification && Notification.requestPermission().then((perm) =>{
         if (perm === 'granted') {
-            const notify = new Notification('Скорость загрузки и парсинга на сайте',{body: `${performanceData} секунды`})
+            let message = ''
+            for (const [key, value] of Object.entries(performanceData)) {
+                if (key !== 'cssCounter' && key !== 'jsCounter') {
+                    message += `${value}\n`;
+                }
+            }
+            const notify = new Notification('Performance results:',{body: message})
         }
     })
 }
@@ -135,13 +142,4 @@ function showNotificationInConsole(performanceData) {
 //             document.body.removeChild(notification)
 //         }, 3000)
 //     }
-// }
-
-// async function checkSystemNotificationPermission() {
-    // if (Notification.permission === 'default') {
-    //     Notification.requestPermission()
-    // }
-    // Notification.requestPermission().then((perm) =>{
-        
-//     })
 // }
